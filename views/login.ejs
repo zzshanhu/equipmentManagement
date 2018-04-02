@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<!--suppress ALL -->
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href="http://cdn.static.runoob.com/libs/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">
+    <script src="http://cdn.static.runoob.com/libs/jquery/2.1.1/jquery.min.js"></script>
+    <script src="http://cdn.static.runoob.com/libs/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <style>
+        body{
+            position: relative;
+            background-size: cover;
+        }
+        .bgImg {
+            z-index: -1;
+            position: relative;
+            /*background-repeat: no-repeat;*/
+            /*background-size: 100%;*/
+            /*background-position-y: -2000px;*/
+            top: 20%;
+        }
+
+        .loginForm{
+            position: absolute;
+            width: 400px;
+            padding: 40px 10px 10px 10px;
+            float: right;
+            top: 100px;
+            margin-top: 3%;
+            right: 100px;
+            border: 1px solid #cccccc;
+            background: #ffffff;
+            border-radius: 5px;
+        }
+        .userSelect{
+            text-align: center;
+            font-size: 20px;
+            margin-bottom: 10px;
+        }
+        .form-horizontal .form-group{
+            margin-left: 0;
+            margin-right: 0;
+            margin-bottom: 30px;
+        }
+        .form-control{
+            height: 40px;
+        }
+        .loginBtn{
+            width: 70% ;
+            line-height: 2;
+        }
+        .btnRow{
+            text-align: center;
+        }
+        .check{
+            float: right;
+        }
+        .logo{
+            position: absolute;
+            background: rgba(255,255,255,0.75);
+            width: 100%;
+            height: 85px;
+            z-index: 3;
+            box-sizing: border-box;
+        }
+        .loginFooter{
+            width: 100%;
+            background: rgba(0,0,0,0.7);
+            line-height: 25px;
+            box-shadow: 0 0 1px rgba(0,0,0,0.40);
+            min-width: 970px;
+            position: fixed;
+            padding: 10px;
+            z-index: 3;
+            bottom: 0;
+            text-align: center;
+        }
+        .loginFooter span{
+            color: #cccccc;
+        }
+    </style>
+</head>
+<body>
+<div class="content">
+    <div class="loginPage">
+        <div class="logo">
+            <img src="/img/logo.png" alt="">
+        </div>
+        <div class="bgImg">
+            <img src="img/loginBg7.jpg" width="1518px" height="718px" alt="">
+        </div>
+        <div class="loginForm">
+            <div class="userSelect">登录</div>
+            <form class="form-horizontal" action="login" method="post">
+                <div class="form-group col-sm-12">
+                    <div class="input-group">
+                        <div class="input-group-addon">
+                            <span class="glyphicon glyphicon-user" aria-hidden="true"></span>
+                        </div>
+                        <input id="username" type="text" class="form-control" name="username" placeholder="请输入用户名">
+                    </div>
+                </div>
+                <div class="form-group col-sm-12">
+                    <div class="input-group">
+                        <div class="input-group-addon">
+                            <span class="glyphicon glyphicon-lock" aria-hidden="true"></span>
+                        </div>
+                        <input id="password" type="password" class="form-control" name="passwd"  placeholder="请输入密码">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class=" col-sm-12 btnRow">
+                        <button type="button" onclick="submitInfo()" class="btn btn-default loginBtn">立即登录</button>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="col-sm-offset-2 col-sm-10">
+                        <div class="checkbox check">
+                            <label><input type="checkbox" name="remember" value="1"> 记住密码</label>
+                        </div>
+                    </div>
+                </div>
+            </form>
+        </div>
+        <div class="loginFooter row" style="margin-left: 0">
+            <div class="col-md-12">
+                <span>Copyright©2018 四川农业大学信息工程学院 All rights reserved</span>
+            </div>
+        </div>
+    </div>
+
+</div>
+</body>
+</html>
+<script>
+    window.onload=function () {
+        var cookieArr=document.cookie.split('; ')
+        for(var i=0;i<cookieArr.length;i++){
+            var mykey=cookieArr[i].split('=')[0];
+            var value=cookieArr[i].split('=')[1];
+            if(mykey=='username'){
+                console.log('username')
+                $('#username').val(value);
+            }
+            if(mykey=='password'){
+                console.log('password')
+                $('#password').val(value);
+            }
+        }
+    }
+    function submitInfo() {
+        console.log(111);
+        console.log($("form").serialize());
+        $.ajax({
+            url: 'login',
+            type: 'POST',
+            dataType: 'text',
+            data:$("form").serialize()
+        })
+            .done(function(data) {
+                console.log(data);
+                if(data=='-1') {
+                    alert("对不起，您没有权限！")
+                }else if(data=='0'||data=='1'){
+                    window.location.href='index';
+                }else if(data=='2') {
+                    alert("账号错误，请检查后重新输入！")
+                }else if(data=='3') {
+                    alert("密码错误，请检查后重新输入！")
+                }else{
+                    alert("未知错误，请刷新后输入！")
+                }
+            });
+    }
+</script>

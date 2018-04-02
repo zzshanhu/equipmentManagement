@@ -1,0 +1,285 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>实验设备管理处</title>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href="http://cdn.static.runoob.com/libs/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="css/detail.css">
+    <link rel="stylesheet" href="css/jquery.vm-carousel.css">
+    <script src="http://cdn.static.runoob.com/libs/jquery/2.1.1/jquery.min.js"></script>
+    <script src="http://cdn.static.runoob.com/libs/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <script src="https://cdn.bootcss.com/react/15.4.2/react.min.js"></script>
+    <script src="https://cdn.bootcss.com/react/15.4.2/react-dom.min.js"></script>
+    <script src="https://cdn.bootcss.com/babel-standalone/6.22.1/babel.min.js"></script>
+    <script src="js/ejs.min.js"></script>
+    <script src="js/jquery.vm-carousel.js"></script>
+    <script src="js/modernizr.js"></script>
+
+</head>
+<body>
+<div id="container" class="container">
+    <!--header begin-->
+    <div class="row">
+        <div id="header">
+            <div id="headerImg">
+                <!--<img src="./public/img/banner1.jpg" alt="" width="100%" height="250px">-->
+            </div>
+            <div id="headerInfo" class="row">
+                <div class="col-xs-7">
+                    <img src="img/schLogo1.png" alt="">
+                </div>
+                <div class="col-xs-5 title">
+                    <p>实验设备管理处</p>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!--header end-->
+
+    <!--导航条开始-->
+    <div class="row">
+        <nav class="navbar navbar-default">
+            <div class="container-fluid">
+                <!-- Collect the nav links, forms, and other content for toggling -->
+                <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+                    <ul class="nav navbar-nav">
+                        <li><a href="#">首页 <span class="sr-only">(current)</span></a></li>
+                        <li><a href="#">机构设置</a></li>
+                        <li><a href="#">实验室管理</a></li>
+                        <li class="active"><a href="#">实验设备管理</a></li>
+                        <li><a href="#">设备共享</a></li>
+                        <li><a href="#">工作流程</a></li>
+                        <li><a href="#">资料下载</a></li>
+                        <li class="writeTreaty"><a href="#">意见反馈</a></li>
+                    </ul>
+                    <!--<form class="navbar-form navbar-left">-->
+                        <!--<div class="form-group">-->
+                            <!--<input id="search" type="text" class="form-control" placeholder="请输入搜索关键字"/>-->
+                        <!--</div>-->
+                        <!--<button type="submit" class="btn btn-default"><span class="glyphicon glyphicon-search" aria-hidden="true"></span>搜索</button>-->
+                    <!--</form>-->
+                    <ul class="nav navbar-nav navbar-right">
+                        <li><a href="#">管理员登陆</a></li>
+                        <li><a href="/">注销</a></li>
+                    </ul>
+                </div><!-- /.navbar-collapse -->
+            </div><!-- /.container-fluid -->
+        </nav>
+    </div>
+    <!--导航条结束-->
+
+    <!--中间内容开始-->
+        <div class="bodyContent">
+            <div class="row">
+                <div class="contentTitle">
+                    <span>
+                        <span class="glyphicon glyphicon-list-alt" aria-hidden="true"></span>
+                        仪器详情
+                    </span>
+                </div>
+            </div>
+            <div class="row equipmentDetail">
+                <div class="col-lg-4 col-md-4 col-sm-4 xs-hidden equipmentImg">
+                    <img src="<%=equipClassInfo.equipClassName[0].equipImage%>" alt="">
+                </div>
+                <div class="col-lg-8 col-md-8 col-sm-8 col-xs-12 equipmentInfo">
+                    <div class="equipState">
+                        <div class="equipTitle"><h3 style="color: #003B76"><%=equipClassInfo.equipInfoArr[0].equipName%></h3></div>
+                        <div class="state"><p style="color: orangered">状态：<%=equipClassInfo.equipInfoArr[0].canBorrow==1?'可借':'不可借'%></p></div>
+                    </div>
+                    <table class="table table-striped table-bordered equipmentInfoTable">
+                        <tbody>
+                        <tr>
+                            <td>型号</td>
+                            <td><%=equipClassInfo.equipInfoArr[0].equipModel%> </td>
+                            <td>制造厂商</td>
+                            <td><%=equipClassInfo.equipInfoArr[0].equipCreator%></td>
+                        </tr>
+                        <tr>
+                            <td>购买日期</td>
+                            <td><%=equipClassInfo.equipInfoArr[0].equipBuyDate.toLocaleDateString()%></td>
+                            <td>类别</td>
+                            <td><%=equipClassInfo.equipClassName[0].equipName%></td>
+                        </tr>
+                        <tr>
+
+                        </tr>
+                        </tbody>
+                    </table>
+                    <button class="btn btn-primary borrowbtn">
+                        <span class="glyphicon glyphicon-calendar" aria-hidden="true"></span>
+                        我要借
+                    </button>
+                </div>
+            </div>
+
+            <div class="row detailInfo">
+                <table class="table table-striped table-bordered detailInfoTable">
+                    <tbody>
+                    <tr>
+                        <td>学科领域</td>
+                        <td>物联网 </td>
+                    </tr>
+                    <tr>
+                        <td>主要功能</td>
+                        <td><%=equipClassInfo.equipInfoArr[0].equipDescription%></td>
+                    </tr>
+                    <tr>
+                        <td>主要技术指标</td>
+                        <td>xxxxx</td>
+                    </tr>
+                    <tr>
+                        <td>备注</td>
+                        <td>传感器类</td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    <!--中间内容结束-->
+
+    <!--申请模态框开始-->
+    <div class="modal fade" id="borrowModal" tabindex="-1" role="dialog" aria-labelledby="borrowModalTitle" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+                        &times;
+                    </button>
+                    <h4 class="modal-title" id="borrowModalTitle">
+                        我要借
+                    </h4>
+                </div>
+                <div class="modal-body">
+                    <div class="input-group">
+                        <div class="form-group">
+                            <form id="noteForm" class="form-horizontal">
+                                <div class="form-group">
+                                    <label for="inputClass3" class="col-sm-3 control-label">类别：</label>
+                                    <div class="col-sm-8">
+                                        <input type="text" readonly class="form-control" id="inputClass3" value="<%=equipClassInfo.equipClassName[0].equipName%>">
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label for="inputName3" class="col-sm-3 control-label">名称：</label>
+                                    <div class="col-sm-8">
+                                        <input type="text" readonly class="form-control" id="inputName3" value="<%=equipClassInfo.equipInfoArr[0].equipName%>">
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label for="inputNum3" class="col-sm-3 control-label">编号：</label>
+                                    <div class="col-sm-8">
+                                        <input type="text" readonly class="form-control" id="inputNum3" value="<%=equipClassInfo.equipInfoArr[0].equipID%>">
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label for="inputNum3" class="col-sm-3 control-label">联系方式：</label>
+                                    <div class="col-sm-8">
+                                        <input type="text" class="form-control" id="inputTel3" placeholder="请输入您的联系方式">
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label for="inputDate3" class="col-sm-3 control-label">归还时间：</label>
+                                    <div class="col-sm-8">
+                                        <input type="date" class="form-control" id="inputDate3">
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button id="submitBtn" type="button" class="btn btn-default" data-dismiss="modal">提交</button>
+                    <button type="button" class="reset btn btn-default" data-dismiss="modal">取消</button>
+                </div>
+            </div><!-- /.modal-content -->
+        </div><!-- /.modal -->
+    </div>
+    <!--申请模态框结束-->
+
+    <!--页脚开始-->
+    <div class="row footer"><!-- row -->
+        <div class="col-lg-4 col-md-4 col-sm-4 col-xs-6"><!-- widgets column left -->
+            <!--<h3 class="title-widget">友情链接</h3>-->
+            <div class="linkMenu">
+                <ul class="link">
+                    <li><p><a href="http://www.sicau.edu.cn">四川农业大学</a></p></li>
+                    <li ><p><a href="http://xxgc.sicau.edu.cn">信息工程学院</a></p></li>
+                    <li ><p><a href="http://zs.sicau.edu.cn/">四川农业大学招生网</a></p></li>
+                    <li ><p><a href="http://tw.sicau.edu.cn/">共青团四川农业大学委员会</a></p></li>
+                </ul>
+            </div>
+        </div><!-- widgets column left end -->
+        <div class="col-lg-5 col-md-5 col-sm-5 col-xs-6"><!-- widgets column center -->
+            <p>官网：<a href="http://xxgc.sicau.edu.cn">http://xxgc.sicau.edu.cn</a></p>
+            <p>微信：@四川农业大学信息工程学院</p>
+            <p>微博：@四川农业大学信息工程学院</p>
+            <p>地址：四川省雅安市雨城区新康路46号四川农业大学第四教学楼</p>
+            <p>邮编：625014&nbsp;&nbsp; 电话：0835-2882177</p>
+        </div><!-- widgets column center end -->
+        <div class="col-lg-3 col-md-3 col-sm-4 hidden-xs "><!-- widgets column right -->
+            <!--<h3 class="title-widget hidden-xs">关注我们</h3>-->
+            <div class="flowRow">
+                <ul class="list-unstyled clear-margins"><!-- widgets -->
+                    <li id="text-8" class="widget-container widget_text">
+                        <div class="textwidget">
+                            <div id="text-4" class="widget widget_text">
+                                <div class="textwidget">
+                                    <div class="col-md-6 col-sm-6 text-center">
+                                        微信公众<br>
+                                        <img width="90px" height="90px" src="img/qrcode.jpg">
+                                    </div>
+                                    <div class="col-md-6 col-sm-6 text-center">
+                                        新浪微博<br>
+                                        <img width="90px" height="90px" src="img/qrcode1.png">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+        </div><!-- widgets column right end -->
+    </div>
+    <div class="row copyright">
+        Copyright © 2018 四川农业大学信息工程学院. Sichuan Agricultural University. All Rights Reserved
+    </div>
+    <!--页脚结束-->
+    </div>
+</body>
+</html>
+<script>
+    // 申请模态框
+    $('.borrowbtn').click(function () {
+        $('#borrowModal').modal('show');
+    })
+    $(function () {
+        $('#submitBtn').click(function(){
+            var equipClass = $('#inputClass3').val();
+            var equipName = $('#inputName3').val();
+            var equipID = $('#inputNum3').val();
+            var userTel = $('#inputTel3').val();
+            var returnTime = $('#inputDate3').val();
+            $.ajax({
+                url:'/referBorrowMsg',
+                type:'POST',
+                dataType:'JSON',
+                data:{
+                    equipClass:equipClass,
+                    equipName:equipName,
+                    equipID:equipID,
+                    userTel:userTel,
+                    returnTime:returnTime
+                },
+                complete:function (data) {
+                    if(data==1){
+                        alert('借用成功，请及时查看申请审批信息。')
+                    }
+                    $('#borrowModal').modal('hide');
+                }
+            })
+        });
+    });
+</script>

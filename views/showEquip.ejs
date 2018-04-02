@@ -1,0 +1,34 @@
+<div class="row showEquipmentRow" >
+    <div class="equipImg col-lg-3 hidden-md hidden-sm hidden-xs" >
+        <h4>类别：<%=equipClassInfo.equipClassName.equipName%></h4>
+        <img class="thumbnail" src="<%=equipClassInfo.equipClassName.equipImage%>" width="280px" height="180px" alt="">
+    </div>
+    <div class="equipInfo col-lg-8 col-md-12 col-sm-12 col-xs-12">
+        <div class="">
+            <table class="table row table-striped table-bordered">
+                <thead>
+                <tr>
+                    <th>名称</th>
+                    <th>编号</th>
+                    <th>可借</th>
+                    <th>操作</th>
+                </tr>
+                </thead>
+                <% if (equipClassInfo.equipInfoArr.length) { %>
+                <tbody>
+                <% equipClassInfo.equipInfoArr.forEach(function(returninfo){ %>
+                <tr>
+                    <td><%=returninfo.equipName%></td>
+                    <td class="center"><%=returninfo.equipID%></td>
+                    <td class="center"><%=returninfo.canBorrow==1?'可借':'不可借'%></td>
+                    <td class="center"> <button @click="borrowBtn" class="btn <%=returninfo.canBorrow==1?'':'disabled'%> btn-primary borrowbtn">详情</button></td>
+                </tr>
+                <% }) %>
+                </tbody>
+                <% } %>
+            </table>
+        </div>
+    </div>
+</div>
+
+

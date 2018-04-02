@@ -1,0 +1,550 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>实验设备管理处</title>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href="http://cdn.static.runoob.com/libs/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="css/index.css">
+    <link rel="stylesheet" href="css/jquery.vm-carousel.css">
+    <script src="http://cdn.static.runoob.com/libs/jquery/2.1.1/jquery.min.js"></script>
+    <script src="http://cdn.static.runoob.com/libs/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <script src="https://cdn.bootcss.com/react/15.4.2/react.min.js"></script>
+    <script src="https://cdn.bootcss.com/react/15.4.2/react-dom.min.js"></script>
+    <script src="https://cdn.bootcss.com/babel-standalone/6.22.1/babel.min.js"></script>
+    <script src="http://apps.bdimg.com/libs/vue/1.0.14/vue.js"></script>
+    <script src="js/ejs.min.js"></script>
+    <script src="js/jquery.vm-carousel.js"></script>
+    <script src="js/modernizr.js"></script>
+</head>
+<body>
+<div id="container" class="container">
+    <!--header begin-->
+    <div class="row">
+        <div id="header">
+            <div id="headerImg">
+                <!--<img src="./public/img/banner1.jpg" alt="" width="100%" height="250px">-->
+            </div>
+            <div id="headerInfo" class="row">
+                <div class="col-xs-7">
+                    <img src="img/schLogo1.png" alt="">
+                </div>
+                <div class="col-xs-5 title">
+                    <p>实验设备管理处</p>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!--header end-->
+
+    <!--导航条开始-->
+    <div class="row">
+        <nav class="navbar navbar-default">
+            <div class="container-fluid">
+                <!-- Collect the nav links, forms, and other content for toggling -->
+                <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+                    <ul class="nav navbar-nav">
+                        <li><a href="#">首页 <span class="sr-only">(current)</span></a></li>
+                        <li><a href="#">机构设置</a></li>
+                        <li><a href="#">实验室管理</a></li>
+                        <li class="active"><a href="#">实验设备管理</a></li>
+                        <li><a href="#">设备共享</a></li>
+                        <li><a href="#">工作流程</a></li>
+                        <li><a href="#">资料下载</a></li>
+                        <li class="writeTreaty"><a>意见反馈</a></li>
+                    </ul>
+                    <!--<form class="navbar-form navbar-left">
+                        <div class="form-group">
+                            <input id="search" type="text" class="form-control" placeholder="请输入搜索关键字"/>
+                        </div>
+                        <button type="submit" class="btn btn-default"><span class="glyphicon glyphicon-search" aria-hidden="true"></span>搜索</button>
+                    </form>-->
+                    <ul class="loginUl nav navbar-nav navbar-right">
+                        <li class="managerLogin"><a href="manager">管理员登陆</a></li>
+                        <li class="logout"><a href="/">注销</a></li>
+                    </ul>
+                </div><!-- /.navbar-collapse -->
+            </div><!-- /.container-fluid -->
+        </nav>
+    </div>
+    <!--导航条结束-->
+
+    <!--中间内容开始-->
+    <div class="bodyContent">
+        <div class="line1 row">
+            <!--个人信息开始-->
+            <div class="stuInfo col-lg-3 col-md-4 col-sm-4 hidden-xs">
+                <div class="contentTitle">
+                    <span>
+                        <span class="glyphicon glyphicon-user" aria-hidden="true"></span>
+                        用户信息
+                    </span>
+                </div>
+                <div class="stuPhoto">
+                    <% if(user[0].sex == 0){%>
+                    <img width="80px" height="80px" src="img/girl.jpg" alt="">
+                    <%}%>
+                    <% if(user[0].sex == 1){%>
+                    <img width="80px" height="80px" src="img/boy.jpg" alt="">
+                    <%}%>
+                </div>
+                <div class="stuMsg">
+                    <p><%= user[0].stuName%></p>
+                    <p><%= user[0].stuID%></p>
+                </div>
+                <div class="stuMajor">
+                    <p><%= user[0].major%></p>
+                </div>
+                <div class="stuWork">
+                    <p class="borrow" v-on:click = "getequimentall">我要申请</p>
+                    <p class="return" v-on:click = "getborrowFeedback">申请反馈</p>
+                    <p class="suggest">建议</p>
+                </div>
+                <div class="manager">
+                    <p><span class="glyphicon glyphicon-user" aria-hidden="true"></span>管理员：<%=rates[new Date().getDay()].rateManName%></p>
+                    <p><span class="glyphicon glyphicon-phone" aria-hidden="true"></span>联系方式：<%=rates[new Date().getDay()].rateManPhone%></p>
+                </div>
+            </div>
+            <!--个人信息结束-->
+            <!--实验公约开始-->
+            <div class="treaty col-lg-6 col-md-7 col-sm-5 col-xs-12">
+                <div class="contentTitle">
+                    <span>
+                        <span class="glyphicon glyphicon-calendar" aria-hidden="true"></span>
+                        文明公约
+                    </span>
+                </div>
+                <div class="treatyMsg">
+                    <span class="hidden-xs">为了更好地管理实验室日常事务，提高师生的素养，营造良好的学习、科研氛围;</span>
+                    <span class="hidden-xs">构建和谐健康环境，特制定实验室公约。</span>
+                    <ul class="treatyList">
+                        <%treatys.forEach(function (treaty) {%>
+                        <li><%=treaty.content%></li>
+                        <%})%>
+                    </ul>
+                    <span class="hidden-xs">本公约适用于实验室所有人员。</span>
+                    <span class="hidden-xs">对于违反者，实验室将酌情给予处分，并记录在相关评语和档案中。</span>
+                </div>
+            </div>
+            <!--实验公约结束-->
+            <!--公告开始-->
+            <div class="notic col-lg-3 col-md-3 col-sm-3 col-xs-12">
+                <div class="contentTitle">
+                    <span>
+                        <span class="glyphicon glyphicon-bullhorn" aria-hidden="true"></span>
+                        公告
+                    </span>
+                </div>
+                <div class="noticeMsgBox">
+                    <ul class="noticeMsg">
+                        <% datas.forEach(function (value) {%>
+                        <li><%=value.content%></li>
+                        <%})%>
+                    </ul>
+                </div>
+            </div>
+            <!--公告结束-->
+        </div>
+        <div class="line2 row">
+            <!--轮播图开始-->
+            <div class="equipInfo col-lg-8 col-sm-8 col-md-8 col-xs-8">
+                <div class="contentTitle">
+                    <span>
+                        <span class="glyphicon glyphicon-wrench" aria-hidden="true"></span>
+                        部分展示
+                    </span>
+                </div>
+                <div class="vmc-container">
+                    <div class="vmc-viewport">
+                        <ul class="vmcarousel-centered-infitine vmc-centered vmcarousel" style="width: 1800px; transition: transform 0.5s; margin-left: -170px;">
+                            <% if (equipsAll.length) { %>
+                            <% equipsAll.forEach(function(equipAll,index){ %>
+                            <li data-slide="<%=index%>" >
+                                <img class="thumbnail" src="<%=equipAll.equipImage%>" alt="" width="170px" height="170px">
+                                <p class="imgMsg"><%=equipAll.equipName%></p>
+                            </li>
+                            <% }) %>
+                            <% } %>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <!--轮播图结束-->
+            <!--热门设备展示开始-->
+            <div class="partShow clo-lg-4 col-sm-4 col-md-4 col-xs-4">
+                <div class="contentTitle">
+                    <span>
+                        <span class="glyphicon glyphicon-wrench" aria-hidden="true"></span>
+                        设备列表
+                    </span>
+                </div>
+                <div class="showContent">
+                    <ul class="showEquip list-inline">
+                        <%equipsAll.forEach(function (equipsAll) {%>
+                        <li><a href="equipClassInfo?id=<%=equipsAll.equipAllNo%>"><%=equipsAll.equipName%></a></li>
+                        <%})%>
+                    </ul>
+                </div>
+            </div>
+            <!--热门设备展示结束-->
+        </div>
+    </div>
+    <!--中间内容结束-->
+
+    <!--页脚开始-->
+    <div class="row footer"><!-- row -->
+        <div class="col-lg-4 col-md-4 col-sm-4 col-xs-6"><!-- widgets column left -->
+            <!--<h3 class="title-widget">友情链接</h3>-->
+                <div class="linkMenu">
+                    <ul class="link">
+                        <li><p><a href="http://www.sicau.edu.cn">四川农业大学</a></p></li>
+                        <li ><p><a href="http://xxgc.sicau.edu.cn">信息工程学院</a></p></li>
+                        <li ><p><a href="http://zs.sicau.edu.cn/">四川农业大学招生网</a></p></li>
+                        <li ><p><a href="http://tw.sicau.edu.cn/">共青团四川农业大学委员会</a></p></li>
+                    </ul>
+                </div>
+        </div><!-- widgets column left end -->
+        <div class="col-lg-5 col-md-5 col-sm-5 col-xs-6"><!-- widgets column center -->
+            <p>官网：<a href="http://xxgc.sicau.edu.cn">http://xxgc.sicau.edu.cn</a></p>
+            <p>微信：@四川农业大学信息工程学院</p>
+            <p>微博：@四川农业大学信息工程学院</p>
+            <p>地址：四川省雅安市雨城区新康路46号四川农业大学第四教学楼</p>
+            <p>邮编：625014&nbsp;&nbsp; 电话：0835-2882177</p>
+        </div><!-- widgets column center end -->
+        <div class="col-lg-3 col-md-3 col-sm-4 hidden-xs "><!-- widgets column right -->
+            <!--<h3 class="title-widget hidden-xs">关注我们</h3>-->
+            <div class="flowRow">
+                <ul class="list-unstyled clear-margins"><!-- widgets -->
+                    <li id="text-8" class="widget-container widget_text">
+                        <div class="textwidget">
+                            <div id="text-4" class="widget widget_text">
+                                <div class="textwidget">
+                                    <div class="col-md-6 col-sm-6 text-center">
+                                        微信公众<br>
+                                        <img width="90px" height="90px" src="img/qrcode.jpg">
+                                    </div>
+                                    <div class="col-md-6 col-sm-6 text-center">
+                                        新浪微博<br>
+                                        <img width="90px" height="90px" src="img/qrcode1.png">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+        </div><!-- widgets column right end -->
+    </div>
+    <div class="row copyright">
+        Copyright © 2018 四川农业大学信息工程学院. Sichuan Agricultural University. All Rights Reserved
+    </div>
+    <!--页脚结束-->
+
+    <!--实验公约模态框开始-->
+    <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+                        &times;
+                    </button>
+                    <h4 class="modal-title" id="myModalLabel">
+                        文明使用设备公约
+                    </h4>
+                </div>
+                <div class="modal-body">
+                    <div class="input-group">
+                        <div class="form-group">
+                            <ul>
+                                <li>勤于思考、刻苦钻研、相互尊重、团结协作、关爱集体、乐于奉献。</li>
+                                <li>保持工作环境的安静，不喧哗、不聊天、不做发出噪音的活动，讨论问题到会议室或者自由讨论区，开会时将手机设置为振动状态。</li>
+                                <li>养成节约的良好习惯，倡导“爱室如家”</li>
+                                <li>爱护公物及个人用品，损坏或者丢失公共物品要主动赔偿，并承担相关责任与损失。</li>
+                                <li>不泄漏实验室科研成果与资料。</li>
+                                <li>禁止在实验室玩游戏、看电影、浏览与专业无关的网站或从事与本职工作无关的活动。</li>
+                                <li>禁止在实验室吸烟；吃饭、吃零食只能在指定的自由讨论区。</li>
+                                <li>遵守实验室各项管理规章制度。</li>
+                                <li>本条约由实验室教师办公会议负责解释。</li>
+                                <li>本条约自公布之日起执行。</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">同意
+                    </button>
+                </div>
+            </div><!-- /.modal-content -->
+        </div><!-- /.modal -->
+    </div>
+    <!--实验公约模态框结束-->
+
+    <!--公告模态框开始-->
+    <div class="modal fade" id="noticeModal" tabindex="-1" role="dialog" aria-labelledby="modalTitle" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+                        &times;
+                    </button>
+                    <h4 class="modal-title" id="modalTitle">
+                        公告栏
+                    </h4>
+                </div>
+                <div class="modal-body">
+                    <div class="input-group">
+                        <div class="form-group">
+                            <ul>
+                                <% datas.forEach(function (value) {%>
+                                <li><%=value.content%></li>
+                                <%})%>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">确定
+                    </button>
+                </div>
+            </div><!-- /.modal-content -->
+        </div><!-- /.modal -->
+    </div>
+    <!--公告模态框结束-->
+
+    <!--借用状态模态框开始-->
+    <div class="modal fade" id="borrowModal" tabindex="-1" role="dialog" aria-labelledby="borrowModalTitle" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+                        &times;
+                    </button>
+                    <h4 class="modal-title btn active" id="borrowModalTitle">
+                        借用反馈
+                    </h4>
+                    <h4 class="modal-title btn" id="returnModalTitle">
+                        归还反馈
+                    </h4>
+                </div>
+                <div class="modal-body borrowModal" id="borrowModal1">
+                    <div class="input-group" v-for="borrowFbInfo in borrowFeedback" v-if="borrowFbInfo.loanStatus==0&&borrowFbInfo.returnStatus==0">
+                        <div class="form-group" >
+                            <ul >
+                                <li>设备编号：<span>{{borrowFbInfo.equipID}}</span></li>
+                                <li>设备名称：<span>{{borrowFbInfo.equipName}}</span></li>
+                                <li>申请时间：<span>{{borrowFbInfo.addDate|time}}</span></li>
+                                <li>归还时间：<span>{{borrowFbInfo.expectedReturnDate|time}}</span></li>
+                                <li class="pass" v-if = 'borrowFbInfo.examineStatus == 0'>审批状态：<span>{{borrowFbInfo.isPass=='1'?'通过':'未通过'}}</span></li>
+                                <li class="checking"  v-else >审批状态：<span>审核中</span></li>
+                                <li v-if = 'borrowFbInfo.examineStatus == 0&&borrowFbInfo.isPass==1'>领取时间：<span>{{borrowFbInfo.getEquipDate}}</span></li>
+                                <li v-if = 'borrowFbInfo.examineStatus == 0&&borrowFbInfo.isPass==0'>驳回原因：<span>{{borrowFbInfo.failReason=='1'?'实验设备意外损坏,请耐心等待维修结束':(borrowFbInfo.failReason=='2'?'您的信用额度不足，请持有效证件到设备管理处重新办理借用资格':(borrowFbInfo.failReason=='3'?'实验设备临时用作课堂教学，暂时无法外借，请耐心等待':'未知原因'))}}</span></li>
+
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-body returnModal" style="display: none">
+                    <div class="input-group">
+                        <div class="form-group">
+                            <ul v-for="borrowFbInfo in borrowFeedback" v-if="borrowFbInfo.loanStatus==1&&borrowFbInfo.returnExamineStatus==0&&borrowFbInfo.returnApplyDate">
+                                <li>设备编号：<span>{{borrowFbInfo.equipID}}</span></li>
+                                <li>设备名称：<span>{{borrowFbInfo.equipName}}</span></li>
+                                <li>归还时间：<span>{{borrowFbInfo.returnApplyDate}}</span></li>
+                                <li v-if = 'borrowFbInfo.returnExamineStatus == 0'>审批状态：<span>{{borrowFbInfo.returnApplyStatus=='1'?'通过':'未通过'}}</span></li>
+                                <li v-else >审批状态：<span>审核中</span></li>
+                                <li v-if = 'borrowFbInfo.returnExamineStatus == 0 &&borrowFbInfo.returnApplyStatus==0'>驳回原因：<span>{{borrowFbInfo.returnApplyFailReason}}</span></li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">确定</button>
+                </div>
+            </div><!-- /.modal-content -->
+        </div><!-- /.modal -->
+    </div>
+    <!--借用状态模态框结束-->
+
+    <!--引入留言反馈模块-->
+    <!--建议模态框开始-->
+    <div class="modal fade" id="suggestModal" tabindex="-1" role="dialog" aria-labelledby="suggestModalTitle" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+                        &times;
+                    </button>
+                    <h4 class="modal-title" id="suggestModalTitle">
+                        建议反馈
+                    </h4>
+                </div>
+                <div class="modal-body">
+                    <div class="input-group">
+                        <div class="form-group suggestBack">
+                            <%suggests.forEach(function (suggest,index) {%>
+                            <%if(index>=3){%>
+                            <% return;}%>
+                            <ul class="suggestList">
+                                <li>
+                                    内容： <span><%=suggest.content%></span>
+                                </li>
+                                <li>
+                                    回复：<span><%=suggest.reply?suggest.reply:'（审核中）'%></span>
+                                </li>
+                                <li>
+                                    时间：<span><%=suggest.addDate.toLocaleDateString()%></span>
+                                </li>
+                            </ul>
+                            <%})%>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">确定
+                    </button>
+                </div>
+            </div><!-- /.modal-content -->
+        </div><!-- /.modal -->
+    </div>
+    <!--建议模态框结束-->
+
+    <!--写建议模态框开始-->
+    <div class="modal fade" id="writeTreatyModal" tabindex="-1" role="dialog" aria-labelledby="writeTreatyModalTitle" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+                        &times;
+                    </button>
+                    <h4 class="modal-title" id="writeTreatyModalTitle">
+                        我的留言
+                    </h4>
+                </div>
+                <div class="modal-body">
+                    <div class="input-group">
+                        <div class="form-group">
+                            <form id="noteForm" class="form-horizontal">
+                                <div class="form-group">
+                                    <div class="col-sm-12">
+                                        <textarea class="form-control" name="" id="suggestInfo" cols="30" rows="12"></textarea>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="suggestInfoBtn btn btn-default" data-dismiss="modal">提交</button>
+                    <button type="button" class="reset btn btn-default" data-dismiss="modal">取消</button>
+                </div>
+            </div><!-- /.modal-content -->
+        </div><!-- /.modal -->
+    </div>
+    <!--写建议模态框结束-->
+
+    <!--我要申请模态框开始-->
+    <div class="modal fade" id="applicationModal" tabindex="-1" role="dialog" aria-labelledby="borrowModalTitle" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+                        &times;
+                    </button>
+                    <h4 class="modal-title btn" v-on:click="borrowApply" id="borrowApplyTitle">
+                        我要借
+                    </h4>
+                    <h4 class="modal-title btn" v-on:click="returnApply" id="returnApplyTitle">
+                        我要还
+                    </h4>
+                </div>
+                <div class="modal-body borrowApply">
+                    <div class="input-group">
+                        <div class="form-group">
+                            <form id="noteForm1" class="form-horizontal">
+                                <div class="form-group">
+                                    <label for="inputClass" class="col-sm-3 control-label">类别：</label>
+                                    <div class="col-sm-8">
+                                        <select class="form-control" v-model="selected" v-on:change="getEquipNoName(selected)">
+                                            <option class="selectNo" v-for="equipmentall in equipmentallFeedback"  :equipNo="equipmentall.equipAllNo">
+                                                {{equipmentall.equipAllNo}}
+                                            </option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label for="inputName" class="col-sm-3 control-label">名称：</label>
+                                    <div class="col-sm-8">
+                                        <select class="form-control" v-model="borrowNum" v-on:change="getCanBorroeNum(borrowNum)">
+                                            <option class="remainNum" v-for="equipArr in equipLastArr" >
+                                                {{equipArr.nowEquipName}}|（剩余：{{equipArr.num}}）
+                                            </option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label for="inputNum" class="col-sm-3 control-label">数量：</label>
+                                    <div class="inputborrowNum col-sm-8">
+                                        <input type="number" class="form-control" id="inputNum" v-on:change="checkNum">
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label for="inputDate" class="col-sm-3 control-label">归还时间：</label>
+                                    <div class="col-sm-8">
+                                        <input type="date" class="form-control" id="inputDate">
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label for="inputNum" class="col-sm-3 control-label">联系方式：</label>
+                                    <div class="inputborrowNum col-sm-8">
+                                        <input type="text" class="form-control" id="userTel" >
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-body returnApply" style="display: none;">
+                    <div class="input-group">
+                        <div class="form-group">
+                            <form id="noteForm2" class="form-horizontal">
+                                <h5>仪器：</h5>
+                                <p  v-for="borrowFbInfo in borrowFeedback" v-if="borrowFbInfo.isPass==1&&borrowFbInfo.loanStatus==1&&borrowFbInfo.examineStatus==0&&borrowFbInfo.returnStatus==0"><label class="checkbox-inline"><input name="returnEquipID" value="{{borrowFbInfo.uDid}}" type="checkbox">{{borrowFbInfo.equipName}} 编号{{borrowFbInfo.equipID}}</label></p>
+                                <p>归还时间：<input name="inputReturnDate" class="inputReturnDate" size="50px" type="text" placeholder="格式：2018.3.28下午第三节课"></p>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" v-on:click="refermsg" class="btn btn-default referBtn" data-dismiss="modal">提交</button>
+                    <button type="button" class="reset btn btn-default" data-dismiss="modal">取消</button>
+                </div>
+            </div><!-- /.modal-content -->
+        </div><!-- /.modal -->
+    </div>
+    <!--我要申请模态框结束-->
+</div>
+<!-- 回到顶部 -->
+<div id="boxbtn" class="boxbtn hidden-xs">
+    <div class="box-in">
+    </div>
+</div>
+<script>
+    var timer  = '';
+    boxbtn.onclick = function(){
+        cancelAnimationFrame(timer);
+        timer = requestAnimationFrame(function fn(){
+            var toTop = document.body.scrollTop || document.documentElement.scrollTop;
+            if(toTop > 0){
+                document.body.scrollTop = document.documentElement.scrollTop = toTop - 100;
+                timer = requestAnimationFrame(fn);
+            }else{
+                cancelAnimationFrame(timer);
+            }
+        });
+    }
+</script>
+<!-- 回到顶部结束 -->
+</body>
+</html>
+<script type="text/javascript" src="js/index.js"></script>
